@@ -1,0 +1,18 @@
+port = 1234             # Listening port for short link
+
+
+[golbat]
+url="http://127.0.0.1:9001"
+api_password="golbat"
+
+[[pokemon]]
+name="google"
+url="https://maps.google.com/maps?q={{.lat}},{{.lon}}"
+
+[[pokemon]]
+name="waze"
+url="https://www.waze.com/ul?ll={{.lat}},{{.lon}}&navigate=yes&zoom=17"
+
+[[pokemon]]
+name="apple"
+url="https://maps.apple.com/maps?daddr={{.lat}},{{.lon}}"
