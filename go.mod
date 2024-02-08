@@ -1,4 +1,4 @@
-module shortlink
+module signpost
 
 go 1.21
 
