@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"text/template"
+    "time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/pelletier/go-toml/v2"
@@ -49,6 +50,6 @@ func main() {
 		Addr:    fmt.Sprintf(":%d", config.Port),
 		Handler: r,
 	}
-	fmt.Println("Starting server on port", config.Port)
+	fmt.Printf("%s [] Starting server on port %d\n", time.Now().Format(config.TimestampFormat), config.Port)
 	srv.ListenAndServe()
 }

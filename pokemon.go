@@ -24,7 +24,7 @@ func GetPokemon(c *gin.Context) {
 
 	if pokemonRecord == nil {
 		msg := "Unable to get location, the pokemon might have despawned\n"
-		fmt.Printf("%s [%s] %s", clientIP, time.Now().Format(config.TimestampFormat), msg)
+		fmt.Printf("%s [%s] %s", time.Now().Format(config.TimestampFormat), clientIP, msg)
 		c.Data(http.StatusNotFound, "application/json; charset=utf-8", []byte(msg))
 
 	} else {
@@ -32,7 +32,7 @@ func GetPokemon(c *gin.Context) {
 		err = pokemonTemplate.ExecuteTemplate(&doc, template, pokemonRecord)
 		_ = err
 		s := doc.String()
-		fmt.Printf("%s [%s] Redirecting to %s\n", clientIP, time.Now().Format(config.TimestampFormat), s)
+		fmt.Printf("%s [%s] Redirecting to %s\n", time.Now().Format(config.TimestampFormat), clientIP, s)
 		c.Redirect(http.StatusMovedPermanently, s)
 	}
 }
