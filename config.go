@@ -1,9 +1,10 @@
 package main
 
 type Config struct {
-	Port    int                  `toml:"port"`
-	Golbat  golbatConfiguration  `toml:"golbat"`
-	Pokemon []templateDefinition `toml:"pokemon"`
+	Port            int                  `toml:"port"`
+	Golbat          golbatConfiguration  `toml:"golbat"`
+	Pokemon         []templateDefinition `toml:"pokemon"`
+	TimestampFormat string
 }
 
 type golbatConfiguration struct {

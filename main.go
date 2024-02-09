@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"text/template"
+    "time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/pelletier/go-toml/v2"
@@ -28,6 +29,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	config.TimestampFormat = "2006-01-02 15:04:05"
 
 	//	templateStr := "https://maps.google.com/maps?q={{.lat}},{{.lon}}"
 
@@ -48,6 +50,6 @@ func main() {
 		Addr:    fmt.Sprintf(":%d", config.Port),
 		Handler: r,
 	}
-
+	fmt.Printf("%s [] Starting server on port %d\n", time.Now().Format(config.TimestampFormat), config.Port)
 	srv.ListenAndServe()
 }
