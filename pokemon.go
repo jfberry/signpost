@@ -13,14 +13,14 @@ func GetPokemon(c *gin.Context) {
 	pokemonId := c.Param("pokemon_id")
 	template := c.Param("template")
 
-	var pokemonRecord any
-	err := getJson(fmt.Sprintf("%s/api/pokemon/id/%s", config.Golbat.Url, pokemonId), &pokemonRecord)
-
 	clientIP := c.GetHeader("CF-Connecting-IP")
 	// fallback if someone is not using cloudflare
 	if clientIP == "" {
 		clientIP = c.ClientIP()
 	}
+
+	var pokemonRecord any
+	err := getJson(fmt.Sprintf("%s/api/pokemon/id/%s", config.Golbat.Url, pokemonId), &pokemonRecord)
 
 	if pokemonRecord == nil {
 		msg := "Unable to get location, the pokemon might have despawned\n"
