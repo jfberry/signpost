@@ -28,6 +28,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	config.TimestampFormat = "2006-01-02 15:04:05"
 
 	//	templateStr := "https://maps.google.com/maps?q={{.lat}},{{.lon}}"
 
@@ -48,6 +49,6 @@ func main() {
 		Addr:    fmt.Sprintf(":%d", config.Port),
 		Handler: r,
 	}
-
+	fmt.Println("Starting server on port", config.Port)
 	srv.ListenAndServe()
 }
