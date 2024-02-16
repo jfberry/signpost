@@ -25,7 +25,7 @@ https://maps.google.com/maps?q=51.50150352191488,-0.14220178361437658
 1.  `pm2 stop signpost`
 1. `git pull`
 3. `go build .`
-3. `pm2 restart porygon`
+3. `pm2 restart signpost`
 
 # Poracle DTS Changes
 Update your Pokemon DTS templates to use Signpost. The links in your templates should look something like this:
