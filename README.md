@@ -1,16 +1,22 @@
 # Signpost
 Signpost serves as a lightweight alternative to URL shorteners for Pokémon Go mappers. Its purpose is to make it more challenging for individuals to scrape and redistribute your data through coordinate feeds.
 
-The functionality of Signpost revolves around handling requests for Pokémon data and redirecting clients to navigation URLs (such as Google Maps, Apple Maps, or Waze). To achieve this, it utilizes the "encounter ID" from [ReactMap](https://github.com/WatWowMap/ReactMap), which allows it to obscure the coordinates of Pokémon data within the navigation URL.
+The functionality of Signpost revolves around handling requests for Pokémon data and redirecting clients to navigation URLs (such as Google Maps, Apple Maps, or Waze). To achieve this, it utilizes the "encounter ID" in the link, which allows users to obscure the coordinates of Pokémon data within the navigation URL.
 
 By default, Pokémon notifications in [Poracle](https://github.com/KartulUdus/PoracleJS) are displayed in plaintext, revealing coordinates in URLs like the following example:
 ```
 https://maps.google.com/maps?q=51.50150352191488,-0.14220178361437658
 ```
 
+The link instead could look like: 
+```
+https://signpost.yourmap.com/pokemon/1782929313465823/google
+```
+
 # Requirements
 
-[go 1.21](https://go.dev/doc/install)
+* [go 1.21](https://go.dev/doc/install)
+* [Golbat](https://github.com/UnownHash/Golbat)
 
 # Installation
 
