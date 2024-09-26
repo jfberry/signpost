@@ -1,0 +1,10 @@
+services:
+  signpost:
+    container_name: SignPost
+    build: .
+    command: "./signpost"
+    ports:
+      - "3035:3035"
+    volumes:
+      - ./config.toml:/usr/src/app/config.toml
+    restart: unless-stopped
