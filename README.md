@@ -40,4 +40,11 @@ Update your Pokemon DTS templates to use Signpost. The links in your templates s
 [Apple](<https://signpost.yourmap.com/pokemon/{{{encounter_id}}}/apple>)
 [Waze](<https://signpost.yourmap.com/pokemon/{{{encounter_id}}}/waze>)
 ```
-⚠️ Don't adjust the URLs for Pokestops/Gyms as they are currently not supported.
+
+Similarly, you can update your Pokestop DTS templates. The links in your templates should look something like this:
+```
+[Google](<https://signpost.yourmap.com/pokestop/{{{[pokestop_id]}}}/google>)
+[Apple](<https://signpost.yourmap.com/pokestop/{{{pokestop_id}}}/apple>)
+[Waze](<https://signpost.yourmap.com/pokestop/{{{pokestop_id}}}/waze>)
+```
+⚠️ Don't adjust the URLs for Gyms as they are currently not supported.

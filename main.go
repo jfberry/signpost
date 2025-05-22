@@ -45,6 +45,7 @@ func main() {
 	gin.SetMode(gin.ReleaseMode)
 	r := gin.New()
 	r.GET("/pokemon/:pokemon_id/:template", GetPokemon)
+	r.GET("/pokestop/:pokestop_id/:template", GetPokestop)
 
 	srv := &http.Server{
 		Addr:    fmt.Sprintf(":%d", config.Port),
