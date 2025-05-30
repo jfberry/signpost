@@ -14,6 +14,7 @@ import (
 
 var pokemonTemplate *template.Template
 var pokestopTemplate *template.Template
+var gymTemplate *template.Template
 
 func main() {
 	tomlFile, err := os.Open("config.toml")
@@ -36,6 +37,7 @@ func main() {
 
 	pokemonTemplate = template.New("pokemon")
 	pokestopTemplate = template.New("pokestop")
+	gymTemplate = template.New("gym")
 
 	for _, t := range config.Pokemon {
 		pokemonTemplate, err = pokemonTemplate.New(t.Name).Parse(t.Url)
@@ -51,10 +53,18 @@ func main() {
 		}
 	}
 
+	for _, t := range config.Gym {
+		gymTemplate, err = gymTemplate.New(t.Name).Parse(t.Url)
+		if err != nil {
+			panic(err)
+		}
+	}
+
 	gin.SetMode(gin.ReleaseMode)
 	r := gin.New()
 	r.GET("/pokemon/:pokemon_id/:template", GetPokemon)
 	r.GET("/pokestop/:pokestop_id/:template", GetPokestop)
+	r.GET("/gym/:gym_id/:template", GetGym)
 
 	srv := &http.Server{
 		Addr:    fmt.Sprintf(":%d", config.Port),
