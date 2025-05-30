@@ -13,6 +13,7 @@ import (
 )
 
 var pokemonTemplate *template.Template
+var pokestopTemplate *template.Template
 
 func main() {
 	tomlFile, err := os.Open("config.toml")
@@ -34,9 +35,17 @@ func main() {
 	//	templateStr := "https://maps.google.com/maps?q={{.lat}},{{.lon}}"
 
 	pokemonTemplate = template.New("pokemon")
+	pokestopTemplate = template.New("pokestop")
 
 	for _, t := range config.Pokemon {
 		pokemonTemplate, err = pokemonTemplate.New(t.Name).Parse(t.Url)
+		if err != nil {
+			panic(err)
+		}
+	}
+
+	for _, t := range config.Pokestop {
+		pokestopTemplate, err = pokestopTemplate.New(t.Name).Parse(t.Url)
 		if err != nil {
 			panic(err)
 		}

@@ -16,3 +16,15 @@ url="https://www.waze.com/ul?ll={{.lat}},{{.lon}}&navigate=yes&zoom=17"
 [[pokemon]]
 name="apple"
 url="https://maps.apple.com/place?coordinate={{.lat}},{{.lon}}"
+
+[[pokestop]]
+name="google"
+url="https://maps.google.com/maps?q={{.lat}},{{.lon}}&z=17"
+
+[[pokestop]]
+name="waze"
+url="https://www.waze.com/ul?ll={{.lat}},{{.lon}}&navigate=yes&zoom=17"
+
+[[pokestop]]
+name="apple"
+url="https://maps.apple.com/place?coordinate={{.lat}},{{.lon}}"
