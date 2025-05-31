@@ -38,21 +38,21 @@ Update your DTS templates to use Signpost. The links in your templates should lo
 
 Pokemon:
 ```
-[Google](<https://signpost.yourmap.com/pokemon/{{encounter_id}}/google>)
-[Apple](<https://signpost.yourmap.com/pokemon/{{encounter_id}}/apple>)
-[Waze](<https://signpost.yourmap.com/pokemon/{{encounter_id}}/waze>)
+[Google](<https://signpost.yourmap.com/pokemon/{{{encounter_id}}}/google>)
+[Apple](<https://signpost.yourmap.com/pokemon/{{{encounter_id}}}/apple>)
+[Waze](<https://signpost.yourmap.com/pokemon/{{{encounter_id}}}/waze>)
 ```
 
 Pokestops:
 ```
-[Google](<https://signpost.yourmap.com/pokestop/{{pokestop_id}}/google>)
-[Apple](<https://signpost.yourmap.com/pokestop/{{pokestop_id}}/apple>)
-[Waze](<https://signpost.yourmap.com/pokestop/{{pokestop_id}}/waze>)
+[Google](<https://signpost.yourmap.com/pokestop/{{{pokestop_id}}}/google>)
+[Apple](<https://signpost.yourmap.com/pokestop/{{{pokestop_id}}}/apple>)
+[Waze](<https://signpost.yourmap.com/pokestop/{{{pokestop_id}}}/waze>)
 ```
 
 Gyms:
 ```
-[Google](<https://signpost.yourmap.com/gym/{{gym_id}}/google>)
-[Apple](<https://signpost.yourmap.com/gym/{{gym_id}}/apple>)
-[Waze](<https://signpost.yourmap.com/gym/{{gym_id}}/waze>)
+[Google](<https://signpost.yourmap.com/gym/{{{gym_id}}}/google>)
+[Apple](<https://signpost.yourmap.com/gym/{{{gym_id}}}/apple>)
+[Waze](<https://signpost.yourmap.com/gym/{{{gym_id}}}/waze>)
 ```
