@@ -4,6 +4,8 @@ type Config struct {
 	Port            int                  `toml:"port"`
 	Golbat          golbatConfiguration  `toml:"golbat"`
 	Pokemon         []templateDefinition `toml:"pokemon"`
+	Pokestop        []templateDefinition `toml:"pokestop"`
+	Gym             []templateDefinition `toml:"gym"`
 	TimestampFormat string
 }
 

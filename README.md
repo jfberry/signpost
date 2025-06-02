@@ -34,10 +34,25 @@ https://signpost.yourmap.com/pokemon/1782929313465823/google
 3. `pm2 restart signpost`
 
 # Poracle DTS Changes
-Update your Pokemon DTS templates to use Signpost. The links in your templates should look something like this:
+Update your DTS templates to use Signpost. The links in your templates should look something like this:
+
+Pokemon:
 ```
 [Google](<https://signpost.yourmap.com/pokemon/{{{encounter_id}}}/google>)
 [Apple](<https://signpost.yourmap.com/pokemon/{{{encounter_id}}}/apple>)
 [Waze](<https://signpost.yourmap.com/pokemon/{{{encounter_id}}}/waze>)
 ```
-⚠️ Don't adjust the URLs for Pokestops/Gyms as they are currently not supported.
+
+Pokestops:
+```
+[Google](<https://signpost.yourmap.com/pokestop/{{{pokestop_id}}}/google>)
+[Apple](<https://signpost.yourmap.com/pokestop/{{{pokestop_id}}}/apple>)
+[Waze](<https://signpost.yourmap.com/pokestop/{{{pokestop_id}}}/waze>)
+```
+
+Gyms:
+```
+[Google](<https://signpost.yourmap.com/gym/{{{gym_id}}}/google>)
+[Apple](<https://signpost.yourmap.com/gym/{{{gym_id}}}/apple>)
+[Waze](<https://signpost.yourmap.com/gym/{{{gym_id}}}/waze>)
+```
