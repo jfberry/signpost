@@ -52,7 +52,7 @@ Pokestops:
 
 Gyms:
 ```
-[Google](<https://signpost.yourmap.com/gym/{{{gym_id}}}/google>)
-[Apple](<https://signpost.yourmap.com/gym/{{{gym_id}}}/apple>)
-[Waze](<https://signpost.yourmap.com/gym/{{{gym_id}}}/waze>)
+[Google](<https://signpost.yourmap.com/gym/{{{gymId}}}/google>)
+[Apple](<https://signpost.yourmap.com/gym/{{{gymId}}}/apple>)
+[Waze](<https://signpost.yourmap.com/gym/{{{gymId}}}/waze>)
 ```
