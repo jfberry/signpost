@@ -15,7 +15,7 @@ https://signpost.yourmap.com/pokemon/1782929313465823/google
 
 # Requirements
 
-* [go 1.21](https://go.dev/doc/install)
+* [go 1.25](https://go.dev/doc/install)
 * [Golbat](https://github.com/UnownHash/Golbat)
 
 # Installation
@@ -26,6 +26,39 @@ https://signpost.yourmap.com/pokemon/1782929313465823/google
 4. `pm2 start ./signpost --name signpost`
 
 ⚠️ Signpost is a web server so you will need to self host it and put it behind a reverse proxy such as Caddy or Nginx.
+
+# Docker
+
+Prebuilt multi-arch (`amd64` + `arm64`) images are published to the GitHub Container Registry on every push to `master`:
+
+```
+ghcr.io/jfberry/signpost:latest
+```
+
+You can pin to a specific build using its commit tag, e.g. `ghcr.io/jfberry/signpost:sha-abc1234`.
+
+### docker compose
+
+1. `cp config.toml.example config.toml` & adjust `config.toml` accordingly.
+2. A ready-to-use [`docker-compose.yml`](docker-compose.yml) is included in this repo:
+
+```yaml
+services:
+  signpost:
+    container_name: SignPost
+    image: ghcr.io/jfberry/signpost:latest
+    ports:
+      - "3035:3035"
+    volumes:
+      - ./config.toml:/usr/src/app/config.toml
+    restart: unless-stopped
+```
+
+3. `docker compose up -d`
+
+To update to the latest image: `docker compose pull && docker compose up -d`.
+
+⚠️ Signpost is a web server so you will still need to put it behind a reverse proxy such as Caddy or Nginx.
 
 # Updating
 1.  `pm2 stop signpost`

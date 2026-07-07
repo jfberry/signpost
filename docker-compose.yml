@@ -1,8 +1,7 @@
 services:
   signpost:
     container_name: SignPost
-    build: .
-    command: "./signpost"
+    image: ghcr.io/jfberry/signpost:latest
     ports:
       - "3035:3035"
     volumes:
