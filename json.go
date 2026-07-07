@@ -21,5 +21,15 @@ func getJson(url string, target interface{}) error {
 	if err != nil {
 		return err
 	}
+	defer resp.Body.Close()
+
+	// Golbat signals a missing record with a 404. Older versions returned an
+	// empty body; newer versions return a JSON error body such as
+	// {"title":"Not Found","status":404,"detail":"pokemon not found"}. In both
+	// cases we must not decode into target, so callers see a nil record and
+	// return a 404 to the client instead of treating the error as a result.
+	if resp.StatusCode == http.StatusNotFound {
+		return nil
+	}
 	return json.NewDecoder(resp.Body).Decode(target)
 }

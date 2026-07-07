@@ -1,4 +1,4 @@
-FROM golang:1.21-alpine
+FROM golang:1.25-alpine
 WORKDIR /usr/src/app
 COPY . .
 RUN go build -o signpost .
