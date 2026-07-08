@@ -2,8 +2,13 @@ services:
   signpost:
     container_name: SignPost
     image: ghcr.io/jfberry/signpost:latest
+    environment:
+      GOLBAT_URL: "http://golbat:9001"
+      GOLBAT_API_PASSWORD: "golbat"
+      # PORT: "3035"   # optional, defaults to 3035
     ports:
       - "3035:3035"
-    volumes:
-      - ./config.toml:/usr/src/app/config.toml
     restart: unless-stopped
+    # To override the default links, mount a config.toml:
+    # volumes:
+    #   - ./config.toml:/usr/src/app/config.toml

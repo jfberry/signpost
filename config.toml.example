@@ -1,42 +1,15 @@
-port = 1234             # Listening port for signpost
-
+# Only these are needed; everything else has built-in defaults.
+# All values can also be set via env vars: PORT, GOLBAT_URL, GOLBAT_API_PASSWORD.
+port = 3035
 
 [golbat]
-url="http://127.0.0.1:9001"
-api_password="golbat"
+url = "http://127.0.0.1:9001"
+api_password = "golbat"
 
-[[pokemon]]
-name="google"
-url="https://maps.google.com/maps?q={{.lat}},{{.lon}}&z=17"
-
-[[pokemon]]
-name="waze"
-url="https://www.waze.com/ul?ll={{.lat}},{{.lon}}&navigate=yes&zoom=17"
-
-[[pokemon]]
-name="apple"
-url="https://maps.apple.com/place?coordinate={{.lat}},{{.lon}}"
-
-[[pokestop]]
-name="google"
-url="https://maps.google.com/maps?q={{.lat}},{{.lon}}&z=17"
-
-[[pokestop]]
-name="waze"
-url="https://www.waze.com/ul?ll={{.lat}},{{.lon}}&navigate=yes&zoom=17"
-
-[[pokestop]]
-name="apple"
-url="https://maps.apple.com/place?coordinate={{.lat}},{{.lon}}"
-
-[[gym]]
-name="google"
-url="https://maps.google.com/maps?q={{.lat}},{{.lon}}&z=17"
-
-[[gym]]
-name="waze"
-url="https://www.waze.com/ul?ll={{.lat}},{{.lon}}&navigate=yes&zoom=17"
-
-[[gym]]
-name="apple"
-url="https://maps.apple.com/place?coordinate={{.lat}},{{.lon}}"
+# Optional: override the default map links per entity type. Defining any
+# [[pokemon]] blocks replaces the built-in pokemon links entirely (same for
+# [[pokestop]] and [[gym]]). Defaults are google / waze / apple.
+#
+# [[pokemon]]
+# name = "google"
+# url = "https://maps.google.com/maps?q={{.lat}},{{.lon}}&z=17"
