@@ -1,11 +1,14 @@
 package main
 
 import (
+	"context"
 	"flag"
 	"fmt"
 	"log"
 	"net/http"
 	"os"
+	"os/signal"
+	"syscall"
 	"text/template"
 	"time"
 
@@ -70,8 +73,24 @@ func main() {
 		Addr:    fmt.Sprintf(":%d", config.Port),
 		Handler: r,
 	}
-	fmt.Printf("%s [] Starting server on port %d\n", time.Now().Format(config.TimestampFormat), config.Port)
-	srv.ListenAndServe()
+	go func() {
+		fmt.Printf("%s [] Starting server on port %d\n", time.Now().Format(config.TimestampFormat), config.Port)
+		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			log.Fatalf("server error: %v", err)
+		}
+	}()
+
+	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
+	defer stop()
+	<-ctx.Done()
+	stop()
+
+	fmt.Printf("%s [] Shutting down\n", time.Now().Format(config.TimestampFormat))
+	shutdownCtx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	if err := srv.Shutdown(shutdownCtx); err != nil {
+		log.Fatalf("shutdown error: %v", err)
+	}
 }
 
 func runHealthcheck(port int) int {
