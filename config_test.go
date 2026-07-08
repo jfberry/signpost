@@ -1,6 +1,7 @@
 package main
 
 import (
+	"os"
 	"path/filepath"
 	"testing"
 )
@@ -38,5 +39,59 @@ func TestLoad_MissingGolbatURL_Errors(t *testing.T) {
 	_, err := Load()
 	if err == nil {
 		t.Fatal("expected error when GOLBAT_URL is empty, got nil")
+	}
+}
+
+// writeConfig writes a temp config file and points CONFIG_FILE at it.
+func writeConfig(t *testing.T, body string) {
+	t.Helper()
+	p := filepath.Join(t.TempDir(), "config.toml")
+	if err := os.WriteFile(p, []byte(body), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	t.Setenv("CONFIG_FILE", p)
+}
+
+func TestLoad_FileOverridesScalars(t *testing.T) {
+	writeConfig(t, `
+port = 8080
+[golbat]
+url = "http://file:1234"
+api_password = "filepw"
+`)
+	cfg, err := Load()
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if cfg.Port != 8080 || cfg.Golbat.Url != "http://file:1234" || cfg.Golbat.ApiPassword != "filepw" {
+		t.Errorf("scalars not applied from file: %+v", cfg)
+	}
+}
+
+func TestLoad_FileReplacesOnlyDefinedCategory(t *testing.T) {
+	writeConfig(t, `
+[golbat]
+url = "http://file:1234"
+
+[[pokemon]]
+name = "google"
+url = "http://custom/{{.lat}}"
+`)
+	cfg, err := Load()
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if len(cfg.Pokemon) != 1 || cfg.Pokemon[0].Url != "http://custom/{{.lat}}" {
+		t.Errorf("pokemon should be replaced by file, got %+v", cfg.Pokemon)
+	}
+	if len(cfg.Pokestop) != 3 || len(cfg.Gym) != 3 {
+		t.Errorf("untouched categories should keep defaults: pokestop=%d gym=%d", len(cfg.Pokestop), len(cfg.Gym))
+	}
+}
+
+func TestLoad_MalformedFile_Errors(t *testing.T) {
+	writeConfig(t, "port = = broken")
+	if _, err := Load(); err == nil {
+		t.Fatal("expected error for malformed config file")
 	}
 }

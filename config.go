@@ -4,6 +4,7 @@ import (
 	_ "embed"
 	"errors"
 	"fmt"
+	"io/fs"
 	"os"
 
 	"github.com/pelletier/go-toml/v2"
@@ -41,8 +42,40 @@ func Load() (Config, error) {
 		return cfg, fmt.Errorf("parsing embedded defaults: %w", err)
 	}
 
+	path := getenvDefault("CONFIG_FILE", "config.toml")
+	if b, err := os.ReadFile(path); err == nil {
+		var file Config
+		if err := toml.Unmarshal(b, &file); err != nil {
+			return cfg, fmt.Errorf("parsing %s: %w", path, err)
+		}
+		cfg.merge(file)
+	} else if !errors.Is(err, fs.ErrNotExist) {
+		return cfg, fmt.Errorf("reading %s: %w", path, err)
+	}
+
 	cfg.TimestampFormat = "2006-01-02 15:04:05"
 	return cfg, cfg.validate()
+}
+
+func (c *Config) merge(o Config) {
+	if o.Port != 0 {
+		c.Port = o.Port
+	}
+	if o.Golbat.Url != "" {
+		c.Golbat.Url = o.Golbat.Url
+	}
+	if o.Golbat.ApiPassword != "" {
+		c.Golbat.ApiPassword = o.Golbat.ApiPassword
+	}
+	if len(o.Pokemon) > 0 {
+		c.Pokemon = o.Pokemon
+	}
+	if len(o.Pokestop) > 0 {
+		c.Pokestop = o.Pokestop
+	}
+	if len(o.Gym) > 0 {
+		c.Gym = o.Gym
+	}
 }
 
 func (c *Config) validate() error {
