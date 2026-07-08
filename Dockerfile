@@ -19,4 +19,6 @@ FROM gcr.io/distroless/static-debian12:nonroot
 WORKDIR /usr/src/app
 COPY --from=build /out/signpost ./signpost
 EXPOSE 3035
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s \
+  CMD ["/usr/src/app/signpost", "-healthcheck"]
 ENTRYPOINT ["/usr/src/app/signpost"]
