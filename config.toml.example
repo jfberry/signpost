@@ -1,5 +1,6 @@
 # Only these are needed; everything else has built-in defaults.
-# All values can also be set via env vars: PORT, GOLBAT_URL, GOLBAT_API_PASSWORD.
+# All values can also be set via env vars: PORT, GOLBAT_URL, GOLBAT_API_PASSWORD,
+# GOLBAT_API_PASSWORD_FILE, CONFIG_FILE.
 port = 3035
 
 [golbat]

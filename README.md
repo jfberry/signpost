@@ -32,7 +32,7 @@ https://signpost.yourmap.com/pokemon/1782929313465823/google
 Signpost reads configuration from three layers, each overriding the one before:
 
 1. **Built-in defaults** — the google / waze / apple links and port `3035`, baked into the binary.
-2. **`config.toml`** — optional; only needed to override defaults (e.g. custom links). Path overridable with `CONFIG_FILE`.
+2. **`config.toml`** — optional; only needed to override defaults (e.g. custom links). Path overridable with `CONFIG_FILE`, which defaults to `config.toml`.
 3. **Environment variables** — take precedence over everything:
 
 | Variable | Default | Purpose |
@@ -41,6 +41,7 @@ Signpost reads configuration from three layers, each overriding the one before:
 | `GOLBAT_API_PASSWORD` | empty | Golbat API secret |
 | `GOLBAT_API_PASSWORD_FILE` | — | read the secret from a file (Docker/K8s secrets) |
 | `PORT` | `3035` | listening port |
+| `CONFIG_FILE` | `config.toml` | path to the optional config file |
 
 Because the links have defaults, a container needs only `GOLBAT_URL` (and usually `GOLBAT_API_PASSWORD`) to run — no config file required.
 
