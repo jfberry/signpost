@@ -95,3 +95,71 @@ func TestLoad_MalformedFile_Errors(t *testing.T) {
 		t.Fatal("expected error for malformed config file")
 	}
 }
+
+func TestLoad_EnvOverridesFile(t *testing.T) {
+	writeConfig(t, `
+port = 8080
+[golbat]
+url = "http://file:1234"
+api_password = "filepw"
+`)
+	t.Setenv("GOLBAT_URL", "http://env:9999")
+	t.Setenv("PORT", "7000")
+
+	cfg, err := Load()
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if cfg.Golbat.Url != "http://env:9999" {
+		t.Errorf("GOLBAT_URL not applied: %q", cfg.Golbat.Url)
+	}
+	if cfg.Port != 7000 {
+		t.Errorf("PORT not applied: %d", cfg.Port)
+	}
+	if cfg.Golbat.ApiPassword != "filepw" {
+		t.Errorf("password should fall back to file value: %q", cfg.Golbat.ApiPassword)
+	}
+}
+
+func TestLoad_PasswordFile(t *testing.T) {
+	pointNoConfigFile(t)
+	t.Setenv("GOLBAT_URL", "http://golbat:9001")
+	pw := filepath.Join(t.TempDir(), "secret")
+	if err := os.WriteFile(pw, []byte("s3cret\n"), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	t.Setenv("GOLBAT_API_PASSWORD_FILE", pw)
+
+	cfg, err := Load()
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if cfg.Golbat.ApiPassword != "s3cret" {
+		t.Errorf("password from file = %q, want %q", cfg.Golbat.ApiPassword, "s3cret")
+	}
+}
+
+func TestLoad_PlainPasswordWinsOverFile(t *testing.T) {
+	pointNoConfigFile(t)
+	t.Setenv("GOLBAT_URL", "http://golbat:9001")
+	t.Setenv("GOLBAT_API_PASSWORD", "plain")
+	t.Setenv("GOLBAT_API_PASSWORD_FILE", "/does/not/matter")
+
+	cfg, err := Load()
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if cfg.Golbat.ApiPassword != "plain" {
+		t.Errorf("plain password should win, got %q", cfg.Golbat.ApiPassword)
+	}
+}
+
+func TestLoad_InvalidPort_Errors(t *testing.T) {
+	pointNoConfigFile(t)
+	t.Setenv("GOLBAT_URL", "http://golbat:9001")
+	t.Setenv("PORT", "not-a-number")
+
+	if _, err := Load(); err == nil {
+		t.Fatal("expected error for non-numeric PORT")
+	}
+}

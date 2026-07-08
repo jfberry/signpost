@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"io/fs"
 	"os"
+	"strconv"
+	"strings"
 
 	"github.com/pelletier/go-toml/v2"
 )
@@ -34,8 +36,8 @@ type templateDefinition struct {
 
 var config Config
 
-// Load builds the effective configuration from embedded defaults, then (later
-// tasks) an optional config file and environment overrides, and validates it.
+// Load builds the effective configuration from embedded defaults, then an
+// optional config file, then environment overrides, and validates the result.
 func Load() (Config, error) {
 	var cfg Config
 	if err := toml.Unmarshal(defaultsTOML, &cfg); err != nil {
@@ -53,8 +55,34 @@ func Load() (Config, error) {
 		return cfg, fmt.Errorf("reading %s: %w", path, err)
 	}
 
+	if err := cfg.applyEnv(); err != nil {
+		return cfg, err
+	}
 	cfg.TimestampFormat = "2006-01-02 15:04:05"
 	return cfg, cfg.validate()
+}
+
+func (c *Config) applyEnv() error {
+	if v, ok := os.LookupEnv("GOLBAT_URL"); ok {
+		c.Golbat.Url = v
+	}
+	if v, ok := os.LookupEnv("GOLBAT_API_PASSWORD"); ok {
+		c.Golbat.ApiPassword = v
+	} else if f, ok := os.LookupEnv("GOLBAT_API_PASSWORD_FILE"); ok {
+		b, err := os.ReadFile(f)
+		if err != nil {
+			return fmt.Errorf("reading GOLBAT_API_PASSWORD_FILE: %w", err)
+		}
+		c.Golbat.ApiPassword = strings.TrimSpace(string(b))
+	}
+	if v, ok := os.LookupEnv("PORT"); ok {
+		p, err := strconv.Atoi(v)
+		if err != nil {
+			return fmt.Errorf("invalid PORT %q: %w", v, err)
+		}
+		c.Port = p
+	}
+	return nil
 }
 
 func (c *Config) merge(o Config) {
