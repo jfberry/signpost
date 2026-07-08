@@ -163,3 +163,21 @@ func TestLoad_InvalidPort_Errors(t *testing.T) {
 		t.Fatal("expected error for non-numeric PORT")
 	}
 }
+
+func TestLoad_UnreadableConfigFile_Errors(t *testing.T) {
+	// A directory path makes os.ReadFile fail with a non-ErrNotExist error.
+	t.Setenv("CONFIG_FILE", t.TempDir())
+	t.Setenv("GOLBAT_URL", "http://golbat:9001")
+	if _, err := Load(); err == nil {
+		t.Fatal("expected error when CONFIG_FILE points at an unreadable path")
+	}
+}
+
+func TestLoad_UnreadablePasswordFile_Errors(t *testing.T) {
+	pointNoConfigFile(t)
+	t.Setenv("GOLBAT_URL", "http://golbat:9001")
+	t.Setenv("GOLBAT_API_PASSWORD_FILE", t.TempDir()) // a directory → read error
+	if _, err := Load(); err == nil {
+		t.Fatal("expected error when GOLBAT_API_PASSWORD_FILE is unreadable")
+	}
+}
