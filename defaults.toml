@@ -1,37 +1,37 @@
 port = 3035
 
 [[pokemon]]
-name = "google"
-url = "https://maps.google.com/maps?q={{.lat}},{{.lon}}&z=17"
+name="google"
+url="https://maps.google.com/maps?q={{.lat}},{{.lon}}&z=17"
 
 [[pokemon]]
-name = "waze"
-url = "https://www.waze.com/ul?ll={{.lat}},{{.lon}}&navigate=yes&zoom=17"
+name="waze"
+url="https://www.waze.com/ul?ll={{.lat}},{{.lon}}&navigate=yes&zoom=17"
 
 [[pokemon]]
-name = "apple"
-url = "https://maps.apple.com/place?coordinate={{.lat}},{{.lon}}"
+name="apple"
+url="https://maps.apple.com/place?coordinate={{.lat}},{{.lon}}"
 
 [[pokestop]]
-name = "google"
-url = "https://maps.google.com/maps?q={{.lat}},{{.lon}}&z=17"
+name="google"
+url="https://maps.google.com/maps?q={{.lat}},{{.lon}}&z=17"
 
 [[pokestop]]
-name = "waze"
-url = "https://www.waze.com/ul?ll={{.lat}},{{.lon}}&navigate=yes&zoom=17"
+name="waze"
+url="https://www.waze.com/ul?ll={{.lat}},{{.lon}}&navigate=yes&zoom=17"
 
 [[pokestop]]
-name = "apple"
-url = "https://maps.apple.com/place?coordinate={{.lat}},{{.lon}}"
+name="apple"
+url="https://maps.apple.com/place?coordinate={{.lat}},{{.lon}}"
 
 [[gym]]
-name = "google"
-url = "https://maps.google.com/maps?q={{.lat}},{{.lon}}&z=17"
+name="google"
+url="https://maps.google.com/maps?q={{.lat}},{{.lon}}&z=17"
 
 [[gym]]
-name = "waze"
-url = "https://www.waze.com/ul?ll={{.lat}},{{.lon}}&navigate=yes&zoom=17"
+name="waze"
+url="https://www.waze.com/ul?ll={{.lat}},{{.lon}}&navigate=yes&zoom=17"
 
 [[gym]]
-name = "apple"
-url = "https://maps.apple.com/place?coordinate={{.lat}},{{.lon}}"
+name="apple"
+url="https://maps.apple.com/place?coordinate={{.lat}},{{.lon}}"
